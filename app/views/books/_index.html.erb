@@ -10,27 +10,16 @@
   <tbody>
     <% books.each do |book| %>
       <tr>
-        <td><%= link_to(book.user) do %>
-          <%= image_tag book.user.get_profile_image, size:'50x50' %>
+        <td>
+          <%= link_to(book.user) do %>
+            <%= image_tag book.user.get_profile_image, size:'50x50' %>
           <% end %>
         </td>
         <td><%= link_to book.title,book %></td>
         <td><%= book.body %></td>
-        <% if book.favorited_by?(current_user) %>
-        <td>
-          <%= link_to book_favorite_path(book), method: :delete do %>
-          <div class="text-danger">
-            ♥<%= book.favorites.count %>
-          </div>
-          <% end %>
+        <td id="favorite_buttons_<%= book.id %>">
+          <%= render "favorites/favorites", book: book %>
         </td>
-        <% else %>
-        <td>
-          <%= link_to book_favorite_path(book), method: :post do %>
-            ♥<%= book.favorites.count %>
-          <% end %>
-        </td>
-      <% end %>
         <td><%= link_to "コメント数：#{book.book_comments.count}", book_path(book.id), class:"text-dark" %></td>
       </tr>
     <% end %>
