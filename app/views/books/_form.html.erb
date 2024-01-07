@@ -7,6 +7,10 @@
     <%= f.label :body %>
     <%= f.text_area :body, class: 'form-control book_body' %>
   </div>
+  <div class="form-group">
+    <label>Tag</label>
+    <%= f.text_field :category,class: 'form-control book_catagory' %>
+  </div>
   <% if book.id.nil? %>
     <div class="form-group, d-flex" id="star">
       <%= f.label :Rate %>
