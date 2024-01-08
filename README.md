@@ -1,24 +1,17 @@
-# README
+応用課題　Bookers2
+====
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+テーマ： 読んだ本の感想を投稿するサイト
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+機能
+・ログイン
+・投稿
+・編集
+・削除
+・いいね
+・コメント
+・フォロー/フォロワー
+・検索
+・５段階評価
+・並び替え
+・タグ付け
