@@ -3,7 +3,7 @@ require 'rails_helper'
 describe '[STEP2] ユーザログイン後のテスト' do
   let(:user) { create(:user) }
   let!(:other_user) { create(:user) }
-  let!(:book) { create(:book, user: user) }
+  let!(:book) { create(:book, user:) }
   let!(:other_book) { create(:book, user: other_user) }
 
   before do
@@ -21,7 +21,7 @@ describe '[STEP2] ユーザログイン後のテスト' do
         home_link = find_all('a')[1].native.inner_text
         home_link = home_link.gsub(/\n/, '').gsub(/\A\s*/, '').gsub(/\s*\Z/, '')
         click_link home_link
-        is_expected.to eq '/users/' + user.id.to_s
+        is_expected.to eq "/users/#{user.id}"
       end
       it 'Usersを押すと、ユーザ一覧画面に遷移する' do
         users_link = find_all('a')[2].native.inner_text
@@ -100,7 +100,7 @@ describe '[STEP2] ユーザログイン後のテスト' do
       end
       it 'リダイレクト先が、保存できた投稿の詳細画面になっている' do
         click_button 'Create Book'
-        expect(current_path).to eq '/books/' + Book.last.id.to_s
+        expect(current_path).to eq "/books/#{Book.last.id}"
       end
     end
   end
@@ -112,7 +112,7 @@ describe '[STEP2] ユーザログイン後のテスト' do
 
     context '表示内容の確認' do
       it 'URLが正しい' do
-        expect(current_path).to eq '/books/' + book.id.to_s
+        expect(current_path).to eq "/books/#{book.id}"
       end
       it '「Book detail」と表示される' do
         expect(page).to have_content 'Book detail'
@@ -176,15 +176,15 @@ describe '[STEP2] ユーザログイン後のテスト' do
     context '編集リンクのテスト' do
       it '編集画面に遷移する' do
         click_link 'Edit'
-        expect(current_path).to eq '/books/' + book.id.to_s + '/edit'
+        expect(current_path).to eq "/books/#{book.id}/edit"
       end
     end
 
     context '削除リンクのテスト' do
       it 'application.html.erbにjavascript_pack_tagを含んでいる' do
         is_exist = 0
-        open("app/views/layouts/application.html.erb").each do |line|
-          strip_line = line.chomp.gsub(" ", "")
+        open('app/views/layouts/application.html.erb').each do |line|
+          strip_line = line.chomp.gsub(' ', '')
           if strip_line.include?("<%=javascript_pack_tag'application','data-turbolinks-track':'reload'%>")
             is_exist = 1
             break
@@ -211,7 +211,7 @@ describe '[STEP2] ユーザログイン後のテスト' do
 
     context '表示の確認' do
       it 'URLが正しい' do
-        expect(current_path).to eq '/books/' + book.id.to_s + '/edit'
+        expect(current_path).to eq "/books/#{book.id}/edit"
       end
       it '「Editing Book」と表示される' do
         expect(page).to have_content 'Editing Book'
@@ -249,7 +249,7 @@ describe '[STEP2] ユーザログイン後のテスト' do
         expect(book.reload.body).not_to eq @book_old_body
       end
       it 'リダイレクト先が、更新した投稿の詳細画面になっている' do
-        expect(current_path).to eq '/books/' + book.id.to_s
+        expect(current_path).to eq "/books/#{book.id}"
         expect(page).to have_content 'Book detail'
       end
     end
@@ -313,7 +313,7 @@ describe '[STEP2] ユーザログイン後のテスト' do
 
     context '表示の確認' do
       it 'URLが正しい' do
-        expect(current_path).to eq '/users/' + user.id.to_s
+        expect(current_path).to eq "/users/#{user.id}"
       end
       it '投稿一覧のユーザ画像のリンク先が正しい' do
         expect(page).to have_link '', href: user_path(user)
@@ -367,7 +367,7 @@ describe '[STEP2] ユーザログイン後のテスト' do
 
     context '表示の確認' do
       it 'URLが正しい' do
-        expect(current_path).to eq '/users/' + user.id.to_s + '/edit'
+        expect(current_path).to eq "/users/#{user.id}/edit"
       end
       it '名前編集フォームに自分の名前が表示される' do
         expect(page).to have_field 'user[name]', with: user.name
@@ -401,7 +401,7 @@ describe '[STEP2] ユーザログイン後のテスト' do
         expect(user.reload.introduction).not_to eq @user_old_intrpduction
       end
       it 'リダイレクト先が、自分のユーザ詳細画面になっている' do
-        expect(current_path).to eq '/users/' + user.id.to_s
+        expect(current_path).to eq "/users/#{user.id}"
       end
     end
   end

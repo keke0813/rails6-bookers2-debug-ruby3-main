@@ -14,17 +14,15 @@ class UsersController < ApplicationController
 
   def edit
     user = User.find(params[:id])
-    unless user.id == current_user.id
-      redirect_to user_path(current_user)
-    end
+    redirect_to user_path(current_user) unless user.id == current_user.id
     @user = User.find(params[:id])
   end
 
   def update
     if @user.update(user_params)
-      redirect_to user_path, notice: "You have updated user successfully."
+      redirect_to user_path, notice: 'You have updated user successfully.'
     else
-      render "edit"
+      render 'edit'
     end
   end
 
@@ -36,8 +34,8 @@ class UsersController < ApplicationController
 
   def ensure_correct_user
     @user = User.find(params[:id])
-    unless @user == current_user
-      redirect_to user_path(current_user)
-    end
+    return if @user == current_user
+
+    redirect_to user_path(current_user)
   end
 end
